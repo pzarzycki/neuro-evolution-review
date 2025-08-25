@@ -134,6 +134,30 @@
             font-weight: bold;
             cursor: pointer;
         }
+        .ref-tooltip {
+            position: fixed;
+            z-index: 200;
+            background: #FFFFFF;
+            color: #2C3E50;
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            font-size: 0.9rem;
+            display: none;
+            pointer-events: none;
+            max-width: 32rem;
+            line-height: 1.2;
+        }
+        /* Image modal styles */
+        .image-modal-content {
+            max-width: 90%;
+            padding: 1rem;
+        }
+        #image-modal-img {
+            width: 100%;
+            height: auto;
+            border-radius: .5rem;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -163,7 +187,7 @@
         <section id="methodology" class="my-24 scroll-mt-20">
             <div class="text-center mb-12">
                 <h3 class="text-3xl font-bold text-[#2C3E50]">Our Methodology</h3>
-                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">This report is an interactive summary of key research papers. Our selection process prioritizes **impact and reproducibility**. We have focused on influential works with high citation counts and, crucially, publicly available code repositories on GitHub. Newer papers with low citations are included if they have been published in a respected venue or provide a public code repository, as this indicates strong potential for future impact.</p>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">This report is an interactive summary of key research papers. Our selection process prioritizes <strong>impact and reproducibility</strong>. We have focused on influential works with high citation counts and, crucially, publicly available code repositories on GitHub. Newer papers with low citations are included if they have been published in a respected venue or provide a public code repository, as this indicates strong potential for future impact.</p>
             </div>
         </section>
 
@@ -173,6 +197,20 @@
                 <h3 class="text-3xl font-bold text-[#2C3E50]">Core Concepts</h3>
                 <p class="mt-2 text-gray-600 max-w-2xl mx-auto">This section covers the foundational algorithms and key comparisons that define the neuro-evolution paradigm.</p>
             </div>
+            <!-- Concept images: NEAT / HyperNEAT (static visuals above the switch) -->
+            <div class="flex justify-center mb-8">
+                <div class="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <div class="flex flex-col items-center">
+                        <img id="img-neat" src="./img/concept-neat.jpg" alt="NEAT concept" class="w-full rounded-lg shadow-sm cursor-pointer" />
+                        <p class="text-xs text-gray-500 mt-2">NEAT — direct encoding</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <img id="img-hyperneat" src="./img/concept-hyperneat.jpg" alt="HyperNEAT concept" class="w-full rounded-lg shadow-sm cursor-pointer" />
+                        <p class="text-xs text-gray-500 mt-2">HyperNEAT — indirect / CPPN</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex justify-center mb-8">
                 <div class="flex space-x-1 rounded-full bg-gray-200 p-1">
                     <button id="neat-tab" class="px-6 py-2 text-sm font-semibold rounded-full active-tab">NEAT</button>
@@ -183,7 +221,7 @@
             <div id="neat-content" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
                     <h4 class="text-2xl font-bold text-[#34495E]">NEAT: Direct Encoding</h4>
-                    <p class="mt-2 text-gray-600 mb-4">NEAT (NeuroEvolution of Augmenting Topologies) uses a **direct encoding** scheme. Every neuron and connection is explicitly defined in the genome. It starts with a minimal network and gradually adds complexity only when it improves performance <a href="#paper-1" class="text-[#D35400] underline">[1]</a>.</p>
+                    <p class="mt-2 text-gray-600 mb-4">NEAT (NeuroEvolution of Augmenting Topologies) uses a <strong>direct encoding</strong> scheme. Every neuron and connection is explicitly defined in the genome. It starts with a minimal network and gradually adds complexity only when it improves performance <a href="#paper-1" class="text-[#D35400] underline">[1]</a>.</p>
                     <ul class="space-y-2 text-sm">
                         <li class="flex items-start"><span class="text-lg text-[#D35400] mr-3">✓</span><strong>Minimal Topology:</strong> Starts simple to keep the search space efficient.</li>
                         <li class="flex items-start"><span class="text-lg text-[#D35400] mr-3">✓</span><strong>Speciation:</strong> Protects new, innovative structures from being eliminated too early.</li>
@@ -202,7 +240,7 @@
             <div id="hyperneat-content" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
                     <h4 class="text-2xl font-bold text-[#34495E]">HyperNEAT: Indirect Encoding</h4>
-                    <p class="mt-2 text-gray-600 mb-4">HyperNEAT uses an **indirect (or generative) encoding**. It evolves a small network called a CPPN, which then generates the final, large-scale network based on the geometric coordinates of its neurons. This decouples genome size from network size <a href="#paper-2" class="text-[#D35400] underline">[2]</a>.</p>
+                    <p class="mt-2 text-gray-600 mb-4">HyperNEAT uses an <strong>indirect (or generative) encoding</strong>. It evolves a small network called a CPPN, which then generates the final, large-scale network based on the geometric coordinates of its neurons. This decouples genome size from network size <a href="#paper-2" class="text-[#D35400] underline">[2]</a>.</p>
                      <ul class="space-y-2 text-sm">
                         <li class="flex items-start"><span class="text-lg text-[#D35400] mr-3">✓</span><strong>Highly Scalable:</strong> A small genome can generate a massive network with millions of connections.</li>
                         <li class="flex items-start"><span class="text-lg text-[#D35400] mr-3">✓</span><strong>Geometric Regularity:</strong> Excellently captures patterns, symmetry, and repetition.</li>
@@ -307,6 +345,14 @@
         <div id="modal-links" class="space-y-3"></div>
       </div>
     </div>
+
+        <!-- Image preview modal -->
+            <div id="image-modal" class="modal">
+                <div class="modal-content image-modal-content">
+                    <span id="image-modal-close" class="close-btn">&times;</span>
+                    <img id="image-modal-img" src="" alt="Preview" />
+                </div>
+            </div>
 
     <footer class="bg-white mt-24">
         <div class="container mx-auto px-6 py-8 text-center text-gray-500">
@@ -419,13 +465,14 @@
         });
 
         const papers = [
-            { id: 1, title: 'Evolving Neural Networks through Augmenting Topologies', year: 2002, authors: 'Stanley, K.O. & Miikkulainen, R.', journal: 'Evolutionary Computation', citations: '15,000+', github: 'https://github.com/Code-ReaQR/NEAT-Python', summary: 'Introduces the core NEAT algorithm, a method for evolving both the weights and the structure (topology) of neural networks. Its key contributions are speciation and historical markings to protect genetic innovation.', category: 'foundational', link: 'https://dl.acm.org/doi/10.1162/106365602320491730'},
-            { id: 2, title: 'Hypercube-based NeuroEvolution of Augmenting Topologies', year: 2009, authors: 'Stanley, K.O., D\'Ambrosio, D.B., & Gauci, J.', journal: 'Artificial Life', citations: '2,000+', github: 'https://github.com/hyperneat/hyperneat', summary: 'Extends NEAT by using a Compositional Pattern Producing Network (CPPN) as an indirect encoding. This allows for the evolution of massive neural networks with a small genome, making it suitable for problems with a geometric substrate.', category: 'foundational', link: 'https://dl.acm.org/doi/10.1162/artl.2009.15.2.15202'},
-            { id: 3, title: 'Evolution Strategies as a Scalable Alternative to Reinforcement Learning', year: 2017, authors: 'Salimans, T., et al.', journal: 'arXiv preprint', citations: '1,500+', github: 'https://github.com/openai/evolution-strategies-starter', summary: 'A landmark paper from OpenAI demonstrating that a simple evolutionary strategy (ES) can be a competitive alternative to Deep Reinforcement Learning (DRL) for complex tasks, especially those that can be parallelized.', category: 'hybrid', link: 'https://arxiv.org/abs/1703.03864'},
-            { id: 4, title: 'Scalable Neuroevolution for Deep Reinforcement Learning', year: 2017, authors: 'Such, F.P., et al.', journal: 'arXiv preprint', citations: '1,500+', github: 'https://github.com/uber-research/deep-neuroevolution', summary: 'This paper introduced a simple genetic algorithm that, when scaled to large populations, could outperform state-of-the-art deep reinforcement learning algorithms on challenging tasks like Atari games.', category: 'hybrid', link: 'https://arxiv.org/abs/1712.06564'},
-            { id: 5, title: 'M-NEAT: a Neuroevolution Framework for Multi-Objective Reinforcement Learning', year: 2018, authors: 'Z. D. C. Gomes, A. G. B. G. de Faria, M. G. Quibão', journal: 'Evolutionary Computation (EC)', citations: '60+', github: 'https://github.com/Zahra-N/M-NEAT', summary: 'An extension of the NEAT algorithm that handles problems with multiple, conflicting objectives by maintaining a diverse population of solutions, allowing it to find more robust trade-offs.', category: 'hybrid', link: 'https://dl.acm.org/doi/10.1145/3205455.3205462'},
-            { id: 6, title: 'Evolutionary Deep Learning for Efficient and Scalable Neural Architecture Search', year: 2022, authors: 'K.O. Stanley, J. Lehman, R. Miikkulainen', journal: 'Nature', citations: '500+', github: null, summary: 'This paper presents a new approach to Neural Architecture Search (NAS) using evolutionary algorithms to discover highly efficient and performant deep learning architectures for various tasks.', category: 'hybrid', link: 'https://www.nature.com/articles/s41586-022-04770-w'},
-            { id: 7, title: 'A Survey on Neuroevolutionary Algorithms for Robotics', year: 2022, authors: 'C. I. M. Z. P. L. G. A. A. B. C. D. E. F. G. H. I. J. K. L. M. N. O. P. Q. R. S. T. U. V. W. X. Y. Z.', journal: 'Robotics and Autonomous Systems', citations: '200+', github: null, summary: 'A comprehensive survey of the latest research on applying neuroevolution to robotics, covering topics from locomotion and manipulation to swarm intelligence and adaptive control.', category: 'application', link: 'https://arxiv.org/abs/2202.01234'}
+            { id: 1, title: 'Evolving Neural Networks through Augmenting Topologies', year: 2002, authors: 'Stanley, K.O. & Miikkulainen, R.', journal: 'Evolutionary Computation', citations: '4,897', github: 'https://github.com/CodeReclaimers/neat-python', summary: 'Introduces the core NEAT algorithm, a method for evolving both the weights and the structure (topology) of neural networks. Its key contributions are speciation and historical markings to protect genetic innovation.', category: 'foundational', link: 'https://doi.org/10.1162/106365602320169811' },
+            { id: 2, title: 'Hypercube-based NeuroEvolution of Augmenting Topologies', year: 2009, authors: 'Stanley, K.O., D\'Ambrosio, D.B., & Gauci, J.', journal: 'Artificial Life', citations: '2,000+', github: 'https://github.com/MisterTea/HyperNEAT', summary: 'Extends NEAT by using a Compositional Pattern Producing Network (CPPN) as an indirect encoding. This allows for the evolution of massive neural networks with a small genome, making it suitable for problems with a geometric substrate.', category: 'foundational', link: 'https://dl.acm.org/doi/10.1162/artl.2009.15.2.15202' },
+            { id: 3, title: 'Evolution Strategies as a Scalable Alternative to Reinforcement Learning', year: 2017, authors: 'Salimans, T., et al.', journal: 'arXiv preprint', citations: '1,500+', github: 'https://github.com/openai/evolution-strategies-starter', summary: 'A landmark paper from OpenAI demonstrating that a simple evolutionary strategy (ES) can be a competitive alternative to Deep Reinforcement Learning (DRL) for complex tasks, especially those that can be parallelized.', category: 'hybrid', link: 'https://arxiv.org/abs/1703.03864' },
+            { id: 4, title: 'Scalable Neuroevolution for Deep Reinforcement Learning', year: 2017, authors: 'Such, F.P., et al.', journal: 'arXiv preprint', citations: '1,500+', github: 'https://github.com/uber-research/deep-neuroevolution', summary: 'This paper introduced a simple genetic algorithm that, when scaled to large populations, could outperform state-of-the-art deep reinforcement learning algorithms on challenging tasks like Atari games.', category: 'hybrid', link: 'https://arxiv.org/abs/1712.06567' },
+            { id: 5, title: 'Modular Multiobjective NEAT (MM-NEAT)', year: 2014, authors: 'J. Schrum et al.', journal: 'GECCO (Proc. Genetic and Evolutionary Computation Conference)', citations: '60+', github: 'https://github.com/schrum2/MM-NEAT', summary: 'MM-NEAT is a modular, multiobjective extension of NEAT that evolves modular neural networks and supports multiple objectives and multimodal behaviors. The project includes Java code and experiments demonstrating multimodal behavior in games and benchmarks.', category: 'hybrid', link: 'https://github.com/schrum2/MM-NEAT/blob/master/PUBLICATIONS.md' },
+            { id: 6, title: 'Designing neural networks through neuroevolution', year: 2019, authors: 'K.O. Stanley, J. Clune, J. Lehman, R. Miikkulainen', journal: 'Nature Machine Intelligence', citations: '500+', github: null, summary: 'A perspective/review discussing how neuroevolution can design neural network architectures and complement gradient-based methods.', category: 'hybrid', link: 'https://www.nature.com/articles/s42256-018-0006-z' },
+            { id: 7, title: 'A Survey on Neuroevolutionary Algorithms for Robotics', year: 2022, authors: 'Hari Mohan Pandey et al.', journal: 'arXiv preprint', citations: '200+', github: null, summary: 'A comprehensive survey of the latest research on applying neuroevolution to robotics, covering topics from locomotion and manipulation to swarm intelligence and adaptive control.', category: 'application', link: 'https://arxiv.org/abs/2210.11704' },
+            { id: 8, title: 'NEORL: NeuroEvolution Optimization with Reinforcement Learning', year: 2021, authors: 'Majdi I. Radaideh et al.', journal: 'arXiv preprint', citations: '50+', github: 'https://github.com/aims-umich/neorl', summary: 'An open-source Python framework combining neuroevolution, reinforcement learning and hybrid algorithms for optimization and control; contains benchmarks and examples.', category: 'hybrid', link: 'https://arxiv.org/abs/2112.07057' }
         ];
 
         const researchList = document.getElementById('research-list');
@@ -464,10 +511,74 @@
             papers.forEach(pub => {
                 const item = document.createElement('li');
                 item.className = 'text-sm text-gray-600';
-                item.innerHTML = `[${pub.id}] ${pub.authors} (${pub.year}). ${pub.title}. <i>${pub.journal}</i>. DOI: <a href="${pub.link}" target="_blank" class="text-[#D35400] underline">Link</a>`;
+                // Prefer neutral label 'Source' because links may be arXiv/DOI/author PDF
+                item.innerHTML = `[${pub.id}] ${pub.authors} (${pub.year}). ${pub.title}. <i>${pub.journal}</i>. Source: <a href="${pub.link}" target="_blank" class="text-[#D35400] underline">Link</a>`;
                 sourceList.appendChild(item);
             });
         };
+
+        // Tooltip element for inline reference hover
+        const refTooltip = document.createElement('div');
+        refTooltip.className = 'ref-tooltip';
+        document.body.appendChild(refTooltip);
+
+        const citationMap = {};
+        papers.forEach(p => {
+            citationMap[`[${p.id}]`] = `${p.authors} (${p.year}). ${p.title}. ${p.journal}.`;
+        });
+
+        // Attach hover & focus handlers for in-text reference anchors like [1], [2]
+        // Use a function so it can be called after dynamic rendering to ensure anchors exist
+        function attachRefTooltips() {
+            document.querySelectorAll('a[href^="#paper-"]').forEach(anchor => {
+                // show tooltip (mouse)
+                anchor.addEventListener('mouseenter', () => {
+                    const idLabel = anchor.textContent.trim();
+                    const text = citationMap[idLabel];
+                    if (!text) return;
+                    refTooltip.textContent = text;
+                    refTooltip.style.display = 'block';
+
+                    // Position relative to viewport using getBoundingClientRect()
+                    const rect = anchor.getBoundingClientRect();
+
+                    // reset to measure size
+                    refTooltip.style.left = '0px';
+                    refTooltip.style.top = '0px';
+
+                    // compute tooltip width (fallbacks kept sensible)
+                    const tipWidth = Math.min(Math.max(refTooltip.offsetWidth || 240, 200), Math.min(520, window.innerWidth - 32));
+
+                    // clamp horizontal position so tooltip stays within viewport
+                    let left = rect.left;
+                    if (left + tipWidth + 16 > window.innerWidth) left = window.innerWidth - tipWidth - 16;
+                    if (left < 8) left = 8;
+
+                    // place above the anchor when possible, otherwise below
+                    let top = rect.top - refTooltip.offsetHeight - 8;
+                    if (top < 8) top = rect.bottom + 8;
+
+                    refTooltip.style.left = `${left}px`;
+                    refTooltip.style.top = `${top}px`;
+                });
+
+                // hide tooltip
+                anchor.addEventListener('mouseleave', () => {
+                    refTooltip.style.display = 'none';
+                });
+
+                // keyboard accessibility: show on focus, hide on blur
+                anchor.addEventListener('focus', () => {
+                    anchor.dispatchEvent(new Event('mouseenter'));
+                });
+                anchor.addEventListener('blur', () => {
+                    refTooltip.style.display = 'none';
+                });
+            });
+        }
+
+        // ensure tooltips are attached after any dynamic rendering
+        attachRefTooltips();
 
         const showPaperDetails = (pub) => {
             modalTitle.textContent = pub.title;
@@ -515,6 +626,38 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Image modal logic
+        const imageModal = document.getElementById('image-modal');
+        const imageModalImg = document.getElementById('image-modal-img');
+        const imageModalClose = document.getElementById('image-modal-close');
+
+        function openImageModal(src, alt) {
+            imageModalImg.src = src;
+            imageModalImg.alt = alt || 'Preview';
+            imageModal.style.display = 'block';
+        }
+
+        function closeImageModal() {
+            imageModal.style.display = 'none';
+            imageModalImg.src = '';
+        }
+
+        // attach click handlers to the static concept images
+        const imgNeat = document.getElementById('img-neat');
+        const imgHyper = document.getElementById('img-hyperneat');
+        if (imgNeat) imgNeat.addEventListener('click', () => openImageModal(imgNeat.src, imgNeat.alt));
+        if (imgHyper) imgHyper.addEventListener('click', () => openImageModal(imgHyper.src, imgHyper.alt));
+
+        imageModalClose.addEventListener('click', closeImageModal);
+        // close on outside click
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) closeImageModal();
+        });
+        // close on Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeImageModal();
         });
 
         renderPublications('all');
